@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.routes import prix, acheteurs, meteo, conseils, auth, ml
+from app.api.routes import prix, acheteurs, meteo, conseils, auth, ml, init
 from app.core.config import settings
 from app.core.database import Base, engine
 from app.models import prix as prix_model, utilisateur, acheteur
@@ -22,6 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(init.router, prefix="/api", tags=["Init"])
 app.include_router(auth.router,      prefix="/api/auth",      tags=["Auth"])
 app.include_router(prix.router,      prefix="/api/prix",      tags=["Prix"])
 app.include_router(acheteurs.router, prefix="/api/acheteurs", tags=["Acheteurs"])
